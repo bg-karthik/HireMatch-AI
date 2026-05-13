@@ -1,0 +1,266 @@
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=DM+Sans:wght@400;500;700&display=swap');
+
+/* ============================================
+   ROOT VARIABLES
+============================================ */
+
+:root {
+  --navy: #0d1b3e;
+  --dark: #060e24;
+
+  --teal: #00c896;
+  --blue: #00A3FF;
+  --purple: #8b5cf6;
+
+  --text-primary: #f0f4ff;
+  --text-secondary: #c5cee0;
+  --text-muted: #8896b3;
+
+  --card-bg: rgba(255, 255, 255, 0.04);
+
+  --card-border: rgba(255, 255, 255, 0.08);
+
+  --gradient:
+    linear-gradient(
+      135deg,
+      #00c896,
+      #00A3FF
+    );
+
+  --gradient-text:
+    linear-gradient(
+      135deg,
+      #00c896,
+      #00A3FF,
+      #8b5cf6
+    );
+
+  font-family: 'DM Sans', sans-serif;
+
+  line-height: 1.5;
+
+  font-weight: 400;
+
+  color: var(--text-primary);
+
+  background: var(--dark);
+
+  font-synthesis: none;
+
+  text-rendering: optimizeLegibility;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ============================================
+   RESET
+============================================ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* ============================================
+   HTML / BODY
+============================================ */
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+
+  min-width: 320px;
+  min-height: 100vh;
+
+  overflow-x: hidden;
+
+  background: var(--dark);
+
+  color: var(--text-primary);
+
+  font-family: 'DM Sans', sans-serif;
+}
+
+/* ============================================
+   ROOT
+============================================ */
+
+#root {
+  min-height: 100vh;
+}
+
+/* ============================================
+   TYPOGRAPHY
+============================================ */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+
+  font-family: 'Sora', sans-serif;
+
+  color: var(--text-primary);
+}
+
+p {
+  margin: 0;
+}
+
+/* ============================================
+   LINKS
+============================================ */
+
+a {
+  color: inherit;
+
+  text-decoration: none;
+
+  transition:
+    color 0.2s ease,
+    opacity 0.2s ease;
+}
+
+a:hover {
+  color: var(--teal);
+}
+
+/* ============================================
+   BUTTONS
+============================================ */
+
+button {
+  border: none;
+
+  outline: none;
+
+  font: inherit;
+
+  color: inherit;
+
+  cursor: pointer;
+
+  background: none;
+
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+button:focus-visible {
+  outline: 2px solid var(--teal);
+
+  outline-offset: 2px;
+}
+
+/* ============================================
+   INPUTS
+============================================ */
+
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--teal);
+
+  outline-offset: 2px;
+}
+
+/* ============================================
+   MEDIA
+============================================ */
+
+img,
+svg,
+video {
+  display: block;
+
+  max-width: 100%;
+}
+
+/* ============================================
+   LISTS
+============================================ */
+
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+
+  list-style: none;
+}
+
+/* ============================================
+   TEXT SELECTION
+============================================ */
+
+::selection {
+  background: rgba(0, 200, 150, 0.3);
+
+  color: #ffffff;
+}
+
+/* ============================================
+   SCROLLBAR
+============================================ */
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #081127;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #00c896,
+      #00A3FF
+    );
+}
+
+::-webkit-scrollbar-thumb:hover {
+  opacity: 0.85;
+}
+
+/* ============================================
+   UTILITY CLASSES
+============================================ */
+
+.gradient-text {
+  background: var(--gradient-text);
+
+  -webkit-background-clip: text;
+  background-clip: text;
+
+  -webkit-text-fill-color: transparent;
+}
+
+.glass-card {
+  background: var(--card-bg);
+
+  border: 1px solid var(--card-border);
+
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+
+  border-radius: 24px;
+}
