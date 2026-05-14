@@ -98,7 +98,7 @@ const YourResumes = () => {
         setAnalysisResult(null);
 
         /* =========================================
-           FORM DATA
+           CREATE FORM DATA
         ========================================= */
 
         const formData =
@@ -115,7 +115,7 @@ const YourResumes = () => {
 
         const uploadResponse =
           await fetch(
-            "http://localhost:5000/resume/upload",
+            `${import.meta.env.VITE_API_URL}/resume/upload`,
             {
               method: "POST",
 
@@ -127,15 +127,16 @@ const YourResumes = () => {
             }
           );
 
-        let uploadData;
+        let uploadData = {};
 
         try {
           uploadData =
             await uploadResponse.json();
         } catch {
-          throw new Error(
-            "Invalid upload response"
-          );
+          uploadData = {
+            error:
+              "Invalid upload response",
+          };
         }
 
         if (!uploadResponse.ok) {
@@ -165,7 +166,7 @@ const YourResumes = () => {
         const jobDescription = `
 Frontend React Developer with experience in React.js,
 JavaScript, HTML, CSS, Node.js, MongoDB, REST APIs,
-Git, and responsive web design.
+Git, responsive web design, and problem solving.
 `;
 
         /* =========================================
@@ -174,7 +175,7 @@ Git, and responsive web design.
 
         const analyzeResponse =
           await fetch(
-            "http://localhost:5000/resume/analyze",
+            `${import.meta.env.VITE_API_URL}/resume/analyze`,
             {
               method: "POST",
 
@@ -194,15 +195,16 @@ Git, and responsive web design.
             }
           );
 
-        let analyzeData;
+        let analyzeData = {};
 
         try {
           analyzeData =
             await analyzeResponse.json();
         } catch {
-          throw new Error(
-            "Invalid analysis response"
-          );
+          analyzeData = {
+            error:
+              "Invalid analysis response",
+          };
         }
 
         if (!analyzeResponse.ok) {
@@ -213,7 +215,7 @@ Git, and responsive web design.
         }
 
         /* =========================================
-           SET RESULT
+           SAVE RESULT
         ========================================= */
 
         setAnalysisResult(
@@ -268,7 +270,7 @@ Git, and responsive web design.
           </p>
         </div>
 
-        {/* CARD */}
+        {/* UPLOAD CARD */}
         <div className="upload-card">
           {error && (
             <div className="error-box">
@@ -276,7 +278,7 @@ Git, and responsive web design.
             </div>
           )}
 
-          {/* FILE */}
+          {/* FILE INPUT */}
           <div className="file-upload-section">
             <label
               htmlFor="resumeUpload"

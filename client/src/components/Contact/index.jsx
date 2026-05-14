@@ -20,16 +20,26 @@ const Contact = () => {
   const [error, setError] =
     useState("");
 
-  // Handle Input Change
+  /* =========================================
+     HANDLE INPUT CHANGE
+  ========================================= */
+
   const handleChange = (e) => {
     setForm({
       ...form,
-      [e.target.name]: e.target.value,
+
+      [e.target.name]:
+        e.target.value,
     });
   };
 
-  // Handle Form Submit
-  const handleSubmit = async (e) => {
+  /* =========================================
+     HANDLE SUBMIT
+  ========================================= */
+
+  const handleSubmit = async (
+    e
+  ) => {
     e.preventDefault();
 
     setError("");
@@ -37,33 +47,48 @@ const Contact = () => {
     try {
       setLoading(true);
 
-      // Example backend request
-      // Replace with your actual backend route later
+      const response =
+        await fetch(
+          `${import.meta.env.VITE_API_URL}/contact`,
+          {
+            method: "POST",
 
-      /*
-      await fetch(
-        "http://localhost:5000/contact",
-        {
-          method: "POST",
+            headers: {
+              "Content-Type":
+                "application/json",
+            },
 
-          headers: {
-            "Content-Type":
-              "application/json",
-          },
+            body: JSON.stringify(
+              form
+            ),
+          }
+        );
 
-          body: JSON.stringify(form),
-        }
-      );
-      */
+      let data = {};
 
-      // Fake API delay
-      await new Promise((resolve) =>
-        setTimeout(resolve, 1200)
-      );
+      try {
+        data =
+          await response.json();
+      } catch {
+        data = {
+          error:
+            "Invalid server response",
+        };
+      }
+
+      if (!response.ok) {
+        throw new Error(
+          data.error ||
+            "Failed to send message"
+        );
+      }
+
+      /* SUCCESS */
 
       setSubmitted(true);
 
-      // Clear form
+      /* CLEAR FORM */
+
       setForm({
         name: "",
         email: "",
@@ -77,7 +102,8 @@ const Contact = () => {
       );
 
       setError(
-        "Something went wrong. Please try again."
+        err.message ||
+          "Something went wrong. Please try again."
       );
 
     } finally {
@@ -114,10 +140,10 @@ const Contact = () => {
 
           <p className="contact-sub">
             Have a question,
-            feedback, or just want to
-            say hello? Fill out the
-            form and we'll get back
-            to you shortly.
+            feedback, or just want
+            to say hello? Fill out
+            the form and we'll get
+            back to you shortly.
           </p>
         </div>
 
@@ -141,9 +167,12 @@ const Contact = () => {
               </p>
 
               <button
+                type="button"
                 className="contact-btn"
                 onClick={() =>
-                  setSubmitted(false)
+                  setSubmitted(
+                    false
+                  )
                 }
               >
                 Send Another Message
@@ -152,21 +181,20 @@ const Contact = () => {
           ) : (
             <form
               className="contact-form"
-              onSubmit={handleSubmit}
+              onSubmit={
+                handleSubmit
+              }
             >
               {/* ERROR */}
               {error && (
                 <p
-                  style={{
-                    color: "#ff6b6b",
-                    marginBottom: "10px",
-                  }}
+                  className="error-text"
                 >
                   {error}
                 </p>
               )}
 
-              {/* ROW */}
+              {/* FORM ROW */}
               <div className="form-row">
                 {/* NAME */}
                 <div className="form-group">
@@ -179,7 +207,9 @@ const Contact = () => {
                     id="name"
                     name="name"
                     placeholder="Jane Doe"
-                    value={form.name}
+                    value={
+                      form.name
+                    }
                     onChange={
                       handleChange
                     }
@@ -198,7 +228,9 @@ const Contact = () => {
                     id="email"
                     name="email"
                     placeholder="jane@example.com"
-                    value={form.email}
+                    value={
+                      form.email
+                    }
                     onChange={
                       handleChange
                     }
@@ -218,7 +250,9 @@ const Contact = () => {
                   name="message"
                   placeholder="Tell us what's on your mind..."
                   rows={6}
-                  value={form.message}
+                  value={
+                    form.message
+                  }
                   onChange={
                     handleChange
                   }
@@ -246,6 +280,7 @@ const Contact = () => {
             {
               icon: "✉",
               label: "Email",
+
               value:
                 "hello@hirematchai.com",
             },
@@ -254,6 +289,7 @@ const Contact = () => {
               icon: "⏱",
               label:
                 "Response Time",
+
               value:
                 "Within 24 hours",
             },
@@ -261,6 +297,7 @@ const Contact = () => {
             {
               icon: "📍",
               label: "Location",
+
               value:
                 "Hyderabad, India",
             },

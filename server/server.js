@@ -10,34 +10,80 @@ dotenv.config();
 
 const app = express();
 
-// Middleware
-app.use(express.json());
-app.use(cors());
+/* =========================================
+   MIDDLEWARE
+========================================= */
 
-// MongoDB Connection
+app.use(
+  cors({
+    origin: "*",
+    methods: [
+      "GET",
+      "POST",
+      "PUT",
+      "DELETE",
+    ],
+    credentials: true,
+  })
+);
+
+app.use(express.json());
+
+/* =========================================
+   MONGODB CONNECTION
+========================================= */
+
 mongoose
   .connect(process.env.MONGODB_URI)
-  .then(() =>
-    console.log("✅ MongoDB connected")
-  )
-  .catch((err) =>
+  .then(() => {
+    console.log(
+      "✅ MongoDB connected"
+    );
+  })
+  .catch((err) => {
     console.error(
       "❌ MongoDB error:",
       err.message
-    )
-  );
+    );
+  });
 
-// Test Route
+/* =========================================
+   TEST ROUTE
+========================================= */
+
 app.get("/", (req, res) => {
-  res.send("🚀 API Running");
+  res.status(200).json({
+    success: true,
+    message:
+      "🚀 HireMatch AI API Running",
+  });
 });
 
-// Routes
+/* =========================================
+   ROUTES
+========================================= */
+
 app.use("/auth", authRoutes);
 
 app.use("/resume", resumeRoutes);
 
-const PORT = process.env.PORT || 5000;
+/* =========================================
+   404 HANDLER
+========================================= */
+
+app.use((req, res) => {
+  res.status(404).json({
+    success: false,
+    message: "Route not found",
+  });
+});
+
+/* =========================================
+   SERVER
+========================================= */
+
+const PORT =
+  process.env.PORT || 5000;
 
 app.listen(PORT, () => {
   console.log(

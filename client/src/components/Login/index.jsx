@@ -22,19 +22,28 @@ const Login = () => {
   const [error, setError] =
     useState("");
 
-  // Handle Email
+  /* =========================================
+     HANDLE EMAIL
+  ========================================= */
+
   const handleEmail = (event) => {
     setEmail(event.target.value);
   };
 
-  // Handle Password
+  /* =========================================
+     HANDLE PASSWORD
+  ========================================= */
+
   const handlePassword = (
     event
   ) => {
     setPassword(event.target.value);
   };
 
-  // Submit Login
+  /* =========================================
+     HANDLE LOGIN
+  ========================================= */
+
   const handleSubmit = async (
     event
   ) => {
@@ -46,7 +55,7 @@ const Login = () => {
 
     try {
       const response = await fetch(
-        "http://localhost:5000/auth/login",
+        `${import.meta.env.VITE_API_URL}/auth/login`,
         {
           method: "POST",
 
@@ -62,25 +71,39 @@ const Login = () => {
         }
       );
 
-      const data =
-        await response.json();
+      let data = {};
+
+      try {
+        data =
+          await response.json();
+      } catch {
+        data = {
+          error:
+            "Invalid server response",
+        };
+      }
 
       if (response.ok) {
-        // Save token
+        /* SAVE TOKEN */
+
         localStorage.setItem(
           "token",
           data.token
         );
 
-        // Save user info optionally
+        /* SAVE USER */
+
         if (data.user) {
           localStorage.setItem(
             "user",
-            JSON.stringify(data.user)
+            JSON.stringify(
+              data.user
+            )
           );
         }
 
-        // Redirect
+        /* REDIRECT */
+
         navigate(
           "/your-resumes"
         );
@@ -100,7 +123,7 @@ const Login = () => {
       );
 
       setError(
-        "Something went wrong. Please try again."
+        "Unable to connect to server."
       );
 
     } finally {

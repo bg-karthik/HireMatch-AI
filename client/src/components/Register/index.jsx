@@ -28,21 +28,30 @@ const Register = () => {
   const [success, setSuccess] =
     useState("");
 
-  // Name
+  /* =========================================
+     HANDLE NAME
+  ========================================= */
+
   const handleNameChange = (
     event
   ) => {
     setName(event.target.value);
   };
 
-  // Email
+  /* =========================================
+     HANDLE EMAIL
+  ========================================= */
+
   const handleEmailChange = (
     event
   ) => {
     setEmail(event.target.value);
   };
 
-  // Password
+  /* =========================================
+     HANDLE PASSWORD
+  ========================================= */
+
   const handlePasswordChange = (
     event
   ) => {
@@ -51,7 +60,10 @@ const Register = () => {
     );
   };
 
-  // Submit
+  /* =========================================
+     HANDLE REGISTER
+  ========================================= */
+
   const handleSubmit = async (
     event
   ) => {
@@ -66,7 +78,7 @@ const Register = () => {
     try {
       const response =
         await fetch(
-          "http://localhost:5000/auth/register",
+          `${import.meta.env.VITE_API_URL}/auth/register`,
           {
             method: "POST",
 
@@ -83,18 +95,32 @@ const Register = () => {
           }
         );
 
-      const data =
-        await response.json();
+      let data = {};
+
+      try {
+        data =
+          await response.json();
+      } catch {
+        data = {
+          error:
+            "Invalid server response",
+        };
+      }
 
       if (response.ok) {
         setSuccess(
           "Registration successful! Redirecting to login..."
         );
 
-        // Clear form
+        /* CLEAR FORM */
+
         setName("");
+
         setEmail("");
+
         setPassword("");
+
+        /* REDIRECT */
 
         setTimeout(() => {
           navigate("/login");
@@ -115,7 +141,7 @@ const Register = () => {
       );
 
       setError(
-        "Something went wrong. Please try again."
+        "Unable to connect to server."
       );
 
     } finally {
